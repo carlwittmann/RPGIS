@@ -2,143 +2,97 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>RPGIS</title>
+  <title>Mapbox and p5.js Template</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
-
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
   <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js'></script>
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
-
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <style type="text/css">
-
-#map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  height: 800px;
-  width: 99%;
-  border: 2px solid brown;
-  border-radius: 2px;
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+  <style>
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+    canvas#p5-canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
 }
+    .hidden {
+    display: none;
+  }
 
-body {
-            font-family: Helvetica, Arial, sans-serif;
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            padding: 0
-        }
-
-        #control-panel {
-            position: absolute;
-            background: #fff;
-            top: 0;
-            left: 0;
-            margin: 12px;
-            padding: 20px;
-            font-size: 12px;
-            line-height: 1.5;
-            z-index: 1;
-        }
-
-        label {
-            display: inline-block;
-            width: 140px;
-        }
   </style>
 </head>
-
-
 <body>
-    <div id="control-panel">
-        <div>
-            <label>Radius</label>
-            <input id="radius" type="range" min="500" max="10000" step="500" value="1000"></input>
-            <span id="radius-value"></span>
-        </div>
-        <div>
-            <label>Coverage</label>
-            <input id="coverage" type="range" min="0" max="1" step="0.1" value="1"></input>
-            <span id="coverage-value"></span>
-        </div>
-        <div>
-            <label>Upper Percentile</label>
-            <input id="upperPercentile" type="range" min="90" max="100" step="1" value="100"></input>
-            <span id="upperPercentile-value"></span>
-        </div>
-    </div>
-</body>
 
+<button id="toggle-hexagons">Toggle Hexagons</button>
 
-<script type="text/javascript">
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWR2ZXJzYXJpYWwtZ2VvZ3JhcGh5IiwiYSI6ImNsZjBvN3FqbjAwZDkzcmw0MGsxNDJ3MDIifQ.aVzxEUcFBUiojBtwfqYe6w';
+<div id='map'></div>
 
-var { MapboxLayer, HexagonLayer } = deck;
-
-//Create the Mapbox map
-var map = new mapboxgl.Map({
-    container: document.body,
-    style: 'mapbox://styles/adversarial-geography/clfrqzhep000301mur6p5ps3l',
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWR2ZXJzYXJpYWwtZ2VvZ3JhcGh5IiwiYSI6ImNsZjBvN3FqbjAwZDkzcmw0MGsxNDJ3MDIifQ.aVzxEUcFBUiojBtwfqYe6w';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/adversarial-geography/clfrqzhep000301mur6p5ps3l',
       center: [-122.4194, 37.7749],
       zoom: 12
     });
 
- //   var DATA_URL = 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv';
-
-//     var OPTIONS = ['radius', 'coverage', 'upperPercentile'];
-//     var COLOR_RANGE = [
-//         [1, 152, 189],
-//         [73, 227, 206],
-//         [216, 254, 181],
-//         [254, 237, 177],
-//         [254, 173, 84],
-//         [209, 55, 78]
-// ];
-
-
-var hexagonLayer;
-
-//Add the deck.gl Custom Layer to the map once the Mapbox map loads
-map.on('style.load', () => {
-
-    hexagonLayer = new MapboxLayer({
-        type: HexagonLayer,
-        id: 'hexagon',
-       // data: d3.csv(DATA_URL),
-        // radius: 1000,
-        // coverage: 1,
-        // upperPercentile: 100,
-        // elevationRange: [0, 1000],
-        // elevationScale: 250,
-        getPosition: d => [Number(d.lng), Number(d.lat)],
-        opacity: 1
+    var p5canvas = document.getElementById('p5-canvas');
+    var toggleButton = document.getElementById('toggle-hexagons');
+    toggleButton.addEventListener('click', function() {
+    document.getElementById('p5-canvas').classList.toggle('hidden');
     });
 
-    // Add the deck.gl hex layer below labels in the Mapbox map
-    map.addLayer(hexagonLayer);
-});
+    var sketch = function(p) {
+                var gridWidth, gridHeight, hexagonSize;
+      
+    p.setup = function() {
+                var mapContainer = document.getElementById('map');
+                var rect = mapContainer.getBoundingClientRect();
+                var w = rect.width;
+                var h = rect.height;
 
-// Add sliders to change the layer's settings based on user input
-OPTIONS.forEach(key => {
-    document.getElementById(key).onchange = (evt) => {
-        var value = Number(evt.target.value);
-        document.getElementById(key + '-value').innerHTML = value;
-        if (hexagonLayer) {
-            hexagonLayer.setProps({
-                [key]: value });
-        }
+        p.createCanvas(w, h).id('p5-canvas');
+
+        gridWidth = w;
+        gridHeight = h;
+    hexagonSize = w/10;
     };
-});
-</script>
 
+      function drawHexagon(cX, cY, r) {
+        p.beginShape();
+        for(let a = 0; a < p.TAU; a += p.TAU/6) {
+          p.vertex(cX + r * p.cos(a), cY + r * p.sin(a));
+        }
+        p.endShape(p.CLOSE);
+    }
+
+      function makeGrid() {
+        var count = 0;
+        for(var y = 0; y < gridHeight; y += hexagonSize/2.3) {
+          for(var x = 0; x < gridWidth; x += hexagonSize*1.5) {
+            drawHexagon(x + hexagonSize*(count%2==0)*0.75, y, hexagonSize/2);
+            }
+          count ++;
+        }
+    }
+
+      p.draw = function() {
+        p.background(0, 0, 0, 0);
+        p.stroke(255);
+        p.noFill();
+
+        makeGrid();
+
+        p.noLoop();
+    };
+};
+
+    var p5 = new p5(sketch, 'map').id('p5canvas');
+  </script>
+</body>
 </html>
-
- 
-
-
-
-
