@@ -3,7 +3,7 @@
 
 
 
-| Image 1 | Image 2 |
+| Normal View | Parchment "On" + Mirrored |
 | ------------- | ------------- |
 | ![Normal](normal.png) | ![Mirrored + Parchment On](mirror_parchment.png) |
 
