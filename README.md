@@ -12,7 +12,7 @@
 ![Export View](exportview_issues.png)
 
 
-![Exported Image](export.png)
+![Exported Image](export.png){:height="50%" width="50%"}
 
 
 Please offer me the https:// link to a GitHub folder. That folder should have:
