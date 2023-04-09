@@ -15,16 +15,63 @@
       background-image: url('https://www.myfreetextures.com/wp-content/uploads/2013/07/old-brown-vintage-parchment-paper-texture.jpg');
       background-size: cover;
     }
-   
-   #map {
-        height: 800px;
+
+  @font-face {
+  font-family: 'Jenson Font';
+  src: url('jenson_font.otf') format('opentype');
+}
+
+  .button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 10px 10px 10px 10px;
+  font-family: "Jenson Font";
+  mix-blend-mode: overlay;
+}
+
+  .button-74:hover {
+  background-color: #fff;
+}
+
+  .button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+  @media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+  #map {
+        height: 750px;
         width: 99%;
         border: 4px solid #333;
         border-radius: 4px;
-        box-shadow: 0 0 10px #666
+        box-shadow: 0 0 10px #666;
     }
 
-    #p5-canvas {
+  .map-hard-light {
+mix-blend-mode: hard-light;
+}
+
+  #p5-canvas {
         position: absolute;
         left: 0;
         top: 0;
@@ -34,62 +81,121 @@
         transition: transform 0.5s ease-in-out;
         pointer-events: none}
 
-        #save-as-pdf {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-}
 
-#map.mirrored {
+  #map.mirrored {
   transform: scaleX(-1);
 }
 
+  .deadbutton {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  color: #422800;
+  cursor: default;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  margin: 10px 10px 10px 10px;
+  font-family: "Jenson Font";
+  mix-blend-mode: overlay;
+}
 
-    .hidden {
+  .slider-container {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 30px;
+  text-align: center;
+  margin: 10px 10px 10px 10px;
+  font-family: "Jenson Font";
+  mix-blend-mode: overlay;
+}
+
+  .hidden {
     display: none;}
-  </style>
+    
+  #map-title {
+  font-size: 30px;
+  color: #422800;
+  font-family: "Jenson Font";
+  display: inline-block;
+  margin-left: 30px;
+  padding: 10px 100px 10px 100px;
+  background-image: url("https://cdn.pixabay.com/photo/2012/04/14/16/57/scroll-34606_960_720.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  text-align: center; 
+  background-position: center; 
+  mix-blend-mode: hard-light;
+}
+</style>
 </head>
 <body>
 
-    <button id="toggle-mirror">Mirror Map</button>
+  <div id="save-as-pdf" class="deadbutton">&#8595; Save as PDF</div>
 
-    <button id="toggle-hexagons">Hex Grid On/Off</button>
-    
+  <div class="slider-container">
     <label for="hexagon-size-slider">Hex Size:</label>
     <input type="range" min="20" max="150" value="50" class="slider" id="hexagon-size-slider">
+  </div>
 
-    
+  <button id="toggle-hexagons" class="button-74">Hex Grid On/Off</button>
 
+  <button id="toggle-mirror" class="button-74">Mirror Map</button>
 
-    <div id="save-as-pdf">Save as PDF</div>
-  
-    <div id='map'></div>
+  <button id="blend-mode-toggle" class="button-74">Parchment On/Off</button>
+
+  <div id="map-title">   Terra Incognita   </div>
+
+  <div id='map'></div>
     
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiYWR2ZXJzYXJpYWwtZ2VvZ3JhcGh5IiwiYSI6ImNsZjBvN3FqbjAwZDkzcmw0MGsxNDJ3MDIifQ.aVzxEUcFBUiojBtwfqYe6w';
         var map = new mapboxgl.Map({
           container: 'map',
           style: 'mapbox://styles/adversarial-geography/clfrqzhep000301mur6p5ps3l',
-          center: [-122.4194, 37.7749],
+          center: [-105, 65],
           zoom: 3,
-          minZoom: 3
+          minZoom: 3,
+          attributionControl: false
         });
 
-        map.addControl(new mapboxgl.NavigationControl());
+        map.addControl(new mapboxgl.AttributionControl({
+          compact: true,
+          customAttribution: '<ul><li>© <a href="https://dylanmoriarty.github.io/blog/moriarty-hand.html">Dylan Moriarty ("Moriarty Hand" Global Polygons)</a></li><li>© <a href="http://www.imagico.de/map/jsdotpattern.php">Christoph Hormann ("Symbol Pattern Generator")</a></li><li>© <a href="https://ecoregions.appspot.com/">RESOLVE Ecoregions 2017 (Regions for patterns)</a></li><li>Erwin Raisz: "General Cartography", 1948 (Mountain symbologies)</li></ul>'
+          }), 'bottom-right');
+
+        map.addControl(new mapboxgl.NavigationControl({
+          position: 'bottom-right'
+        }));
 
         var toggleMirrorButton = document.getElementById('toggle-mirror');
         toggleMirrorButton.addEventListener('click', function() {
         document.getElementById('map').classList.toggle('mirrored');
         });
 
+        var blendModeToggle = document.getElementById("blend-mode-toggle");
+        var mapElement = document.getElementById("map");
+        blendModeToggle.addEventListener("click", function() {
+        mapElement.classList.toggle("map-hard-light");
+        });
+
         var p5canvas = document.getElementById('p5-canvas');
         var toggleButton = document.getElementById('toggle-hexagons');
         toggleButton.addEventListener('click', function() {
         document.getElementById('p5-canvas').classList.toggle('hidden');
-        });
-
-        
+        });       
     
         var sketch = function(p) {
           var gridWidth, gridHeight, hexagonSize;
@@ -148,7 +254,7 @@
             DPI: DPI[96],
             Crosshair: true,
             PrintableArea: true,
-            }), 'top-right');
+            }), 'top-left');
 
     };
     
