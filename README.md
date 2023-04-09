@@ -8,9 +8,11 @@
 | ![Normal](normal.png) | ![Mirrored + Parchment On](mirror_parchment.png) |
 
 
-| Export View | Exported Image |
-| ------------- | ------------- |
-| ![Export View](exportview_issues.png) | ![Exported Image](export.png) |
+
+![Export View](exportview_issues.png)
+
+
+![Exported Image](export.png)
 
 
 Please offer me the https:// link to a GitHub folder. That folder should have:
