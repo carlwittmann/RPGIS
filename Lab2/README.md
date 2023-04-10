@@ -1,5 +1,11 @@
 # Terra Incognita
-## Abstracting Cartography
+### Abstracting Cartography
+
+I used this project as an opportunity to explore the very first maps that captured my imagination as a child.
+
+https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg
+
+https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg
 
 
 
