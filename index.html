@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>RPGIS</title>
+
+<!-- Boilerplate header for Mapbox GL JS and P5JS, plus the "Export Map" extension from Matthew Petroff https://github.com/mpetroff/print-maps -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
   <link href='https://watergis.github.io/mapbox-gl-export/mapbox-gl-export.css' rel='stylesheet' />
@@ -11,7 +13,7 @@
   <script src="https://watergis.github.io/mapbox-gl-export/mapbox-gl-export.js"></script>
   <style>
   
-  /* Background for the entire body element */
+  /* Background for the entire body element from www.myfreetextures.com */
    body {
       background-image: url('https://www.myfreetextures.com/wp-content/uploads/2013/07/old-brown-vintage-parchment-paper-texture.jpg');
       background-size: cover;
@@ -160,117 +162,183 @@ mix-blend-mode: hard-light;
   <button id="toggle-hexagons" class="button-74">Hex Grid On/Off</button>
   <button id="toggle-mirror" class="button-74">Mirror Map</button>
   <button id="blend-mode-toggle" class="button-74">Parchment On/Off</button>
+  <button id="ruins-button" class="button-74">Add Ruins</button>
   <div id="map-title">   Terra Incognita   </div>
   <div id='map'></div>
     
 <script>
 
+// Mapbox GL JS setup.
+// "attributionControl = false" so that I can enter custom attribution information
+// "minZoom: 3" because Mapbox doesn't render pattern layers below zoom level 3
     mapboxgl.accessToken = 'pk.eyJ1IjoiYWR2ZXJzYXJpYWwtZ2VvZ3JhcGh5IiwiYSI6ImNsZjBvN3FqbjAwZDkzcmw0MGsxNDJ3MDIifQ.aVzxEUcFBUiojBtwfqYe6w';
-  
-// Mapbox GL JS setup. attributionControl = false so that I could add full attribution information; minZoom = 3 because patterns don't render past that!
     var map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/adversarial-geography/clfrqzhep000301mur6p5ps3l',
-          center: [-105, 65],
-          zoom: 3,
-          minZoom: 3,
-          attributionControl: false
+            container: 'map',
+            style: 'mapbox://styles/adversarial-geography/clfrqzhep000301mur6p5ps3l',
+            center: [-105, 65],
+            zoom: 3,
+            minZoom: 3,
+            attributionControl: false
+          });
+
+// Initial start state of "Add Ruins" toggle button        
+    var addRuins = false; 
+
+// Creating an array for the user-defined points
+    var ruinsLocation = [];
+
+// Event listener for clicks on the map when "Add Ruins" toggle button is on
+// If "addRuins = true", this function stores the lat/long coordinates of the pointer in the array "ruinsLocation"
+    map.on('click', function(e) {
+      if (addRuins) {
+          var coordinates = e.lngLat; 
+          ruinsLocation.push(coordinates);
+          map.getSource('symbols').setData({ 
+              type: 'FeatureCollection',
+              features: ruinsLocation.map(function(coords) {
+                  return {
+                      type: 'Feature',
+                      geometry: {
+                          type: 'Point',
+                          coordinates: [coords.lng, coords.lat]
+                      }
+                  };
+              })
+          });
+      }
+  });
+
+// Creating a layer for the ruin symbols
+    map.on('load', function() {
+        map.addLayer({
+            id: 'symbols',
+            type: 'symbol',
+            source: {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: []
+                }
+            },
+            layout: {
+                'icon-image': 'ruins', 
+                'icon-size': 0.5 
+            }
         });
+      });
+
+// Assigning html element id of the toggle button 
+    var ruinsButton = document.getElementById('ruins-button');
+
+// Dual-purpose event listener for "Add Ruins" toggle button
+// First click activates "Add Ruins"
+// Second click clears data stored in the "ruinsLocation" array
+    ruinsButton.addEventListener('click', function() {
+        addRuins = !addRuins; 
+        if (addRuins) {
+            ruinsButton.innerHTML = 'Clear Ruins'; 
+        } else {
+            ruinsButton.innerHTML = 'Click to Add Ruins'; 
+            ruinsLocation = []; 
+            map.getSource('symbols').setData({ 
+                type: 'FeatureCollection',
+                features: [] 
+            });
+        }
+    });   
 
 // Customized attributions        
-        map.addControl(new mapboxgl.AttributionControl({
-          compact: true,
-          customAttribution: '<ul><li>© <a href="https://dylanmoriarty.github.io/blog/moriarty-hand.html">Dylan Moriarty ("Moriarty Hand" Global Polygons)</a></li><li>© <a href="http://www.imagico.de/map/jsdotpattern.php">Christoph Hormann ("Symbol Pattern Generator" and symbologies)</a></li><li>© <a href="https://ecoregions.appspot.com/">RESOLVE Ecoregions 2017 (Regions for patterns)</a></li><li>© <a href="https://www.gorillasun.de/blog/a-guide-to-hexagonal-grids-in-p5js/">Ahmad Moussa ("A Guide to Hex Grids in P5JS")</a></li><li>© <a href="https://github.com/mpetroff/print-maps">Matthew Petroff (Mapbox GL JS "Print Maps" extension)</a></li><li>Erwin Raisz: "General Cartography", 1948 (Mountain symbologies)</li></ul>'
-          }), 'bottom-right');
+    map.addControl(new mapboxgl.AttributionControl({
+      compact: true,
+      customAttribution: '<ul><li>© <a href="https://dylanmoriarty.github.io/blog/moriarty-hand.html">Dylan Moriarty ("Moriarty Hand" Global Polygons)</a></li><li>© <a href="http://www.imagico.de/map/jsdotpattern.php">Christoph Hormann ("Symbol Pattern Generator" and symbologies)</a></li><li>© <a href="https://ecoregions.appspot.com/">RESOLVE Ecoregions 2017 (Regions for patterns)</a></li><li>© <a href="https://www.gorillasun.de/blog/a-guide-to-hexagonal-grids-in-p5js/">Ahmad Moussa ("A Guide to Hex Grids in P5JS")</a></li><li>© <a href="https://github.com/mpetroff/print-maps">Matthew Petroff (Mapbox GL JS "Print Maps" extension)</a></li><li>Erwin Raisz: "General Cartography", 1948 (Mountain symbologies)</li></ul>'
+      }), 'bottom-right');
 
 // Added physical map controls
-        map.addControl(new mapboxgl.NavigationControl({
-          position: 'bottom-right'
-        }));
+    map.addControl(new mapboxgl.NavigationControl({
+      position: 'bottom-right'
+    }));
 
 // Event listener for "Mirror Map" toggle button      
-        var toggleMirrorButton = document.getElementById('toggle-mirror');
-        toggleMirrorButton.addEventListener('click', function() {
-        document.getElementById('map').classList.toggle('mirrored');
-        });
+    var toggleMirrorButton = document.getElementById('toggle-mirror');
+    toggleMirrorButton.addEventListener('click', function() {
+    document.getElementById('map').classList.toggle('mirrored');
+    });
 
 // Event listener for "Parchment On/Off" toggle button
-        var blendModeToggle = document.getElementById("blend-mode-toggle");
-        var mapElement = document.getElementById("map");
-        blendModeToggle.addEventListener("click", function() {
-        mapElement.classList.toggle("map-hard-light");
-        });
+    var blendModeToggle = document.getElementById("blend-mode-toggle");
+    var mapElement = document.getElementById("map");
+    blendModeToggle.addEventListener("click", function() {
+    mapElement.classList.toggle("map-hard-light");
+    });
 
 // Even listener for "Hex Grid On/Off" toggle button        
-        var p5canvas = document.getElementById('p5-canvas');
-        var toggleButton = document.getElementById('toggle-hexagons');
-        toggleButton.addEventListener('click', function() {
-        document.getElementById('p5-canvas').classList.toggle('hidden');
-        });       
+    var p5canvas = document.getElementById('p5-canvas');
+    var toggleButton = document.getElementById('toggle-hexagons');
+    toggleButton.addEventListener('click', function() {
+    document.getElementById('p5-canvas').classList.toggle('hidden');
+    });       
     
 // P5.js Hex Grid sketch adapted from (and attributed to) Ahmad Moussa @ https://www.gorillasun.de/blog/a-guide-to-hexagonal-grids-in-p5js/  
-        var sketch = function(p) {
-          var gridWidth, gridHeight, hexagonSize;
-    
-          p.setup = function() {
+    var sketch = function(p) {
+        var gridWidth, gridHeight, hexagonSize;
+
+        p.setup = function() {
             var mapContainer = document.getElementById('map');
             var rect = mapContainer.getBoundingClientRect();
             var w = rect.width;
             var h = rect.height;
-    
+
             p.createCanvas(w, h).id('p5-canvas');
-    
             gridWidth = w;
             gridHeight = h;
             hexagonSize = w/10;
           };
-    
-          function drawHexagon(cX, cY, r) {
+
+// Drawing an individual hexagon          
+        function drawHexagon(cX, cY, r) {
             p.beginShape();
             for(let a = 0; a < p.TAU; a += p.TAU/6) {
               p.vertex(cX + r * p.cos(a), cY + r * p.sin(a));
             }
             p.endShape(p.CLOSE);
           }
-    
-          function makeGrid() {
+
+// Double "for" loop to draw rows and columns      
+        function makeGrid() {
             var count = 0;
             for(var y = 0; y < gridHeight; y += hexagonSize/2.3) {
-              for(var x = 0; x < gridWidth; x += hexagonSize*1.5) {
-                drawHexagon(x + hexagonSize*(count%2==0)*0.75, y, hexagonSize/2);
-              }
+                for(var x = 0; x < gridWidth; x += hexagonSize*1.5) {
+                    drawHexagon(x + hexagonSize*(count%2==0)*0.75, y, hexagonSize/2);
+                  }
               count ++;
             }
           }
-    
-          p.draw = function() {
+
+        p.draw = function() {
             p.background(0, 0, 0, 0);
             p.stroke(80, 80, 80, 50);
             p.noFill();
-    
             makeGrid();
-    
             p.noLoop();
           };
- 
+
 // Function using EventListener to clear and redraw the Hex Grid every time a value change is detected
-          document.getElementById('hexagon-size-slider').addEventListener('input', function() {
+        document.getElementById('hexagon-size-slider').addEventListener('input', function() {
             hexagonSize = this.value;
             p.clear();
             p.redraw();
           });
-          
+      
 // Added print-to-PDF control using Matthew Petroff's Mapbox GL JS extension from https://github.com/mpetroff/print-maps
-          map.addControl(new MapboxExportControl({
+        map.addControl(new MapboxExportControl({
             PageSize: Size.A3,
             PageOrientation: PageOrientation.Portrait,
             Format: Format.PNG,
             DPI: DPI[96],
             Crosshair: true,
             PrintableArea: true,
-            }), 'top-left');
-
-    };
+          }), 'top-left');
+};
         
 // Assign P5.JS sketch to its html canvas id
     var p5 = new p5(sketch, 'map').id('p5canvas');
