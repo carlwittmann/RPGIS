@@ -3,7 +3,7 @@
 
 I used this project as an opportunity to explore the very first maps that captured my imagination as a child.
 
-<p align="center"><img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg"  width="50%" height="50%"></p>
+<p align="center"><img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg"  width="75%" height="75%"></p>
 
 https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg
 
