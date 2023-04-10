@@ -1,0 +1,350 @@
+<!-- This is an inactive copy of the code that runs from carlwittmann/RPGIS/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RPGIS</title>
+
+<!-- Boilerplate header for Mapbox GL JS and P5JS, plus the "Export Map" extension from Matthew Petroff https://github.com/mpetroff/print-maps -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+  <link href='https://watergis.github.io/mapbox-gl-export/mapbox-gl-export.css' rel='stylesheet' />
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <script src="https://watergis.github.io/mapbox-gl-export/mapbox-gl-export.js"></script>
+  <style>
+  
+  /* Background for the entire body element from www.myfreetextures.com */
+   body {
+      background-image: url('https://www.myfreetextures.com/wp-content/uploads/2013/07/old-brown-vintage-parchment-paper-texture.jpg');
+      background-size: cover;
+    }
+
+ /* Creating an element for my local .otf font file  */
+  @font-face {
+  font-family: 'Jenson Font';
+  src: url('jenson_font.otf') format('opentype');
+}
+
+/* Styles for toggle buttons; taken from https://getcssscan.com/css-buttons-examples */
+  .button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 10px 10px 10px 10px;
+  font-family: "Jenson Font";
+  mix-blend-mode: overlay;
+}
+  .button-74:hover {
+  background-color: #fff;
+}
+  .button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+  @media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+/* Mapbox size, position, and border properties (I feel like this could be improved a bit - I struggled with properly formatting position and alignment in general*/
+  #map {
+        height: 750px;
+        width: 99%;
+        border: 4px solid #333;
+        border-radius: 4px;
+        box-shadow: 0 0 10px #666;
+    }
+
+/* Positioning the P5JS hex grid canvas */
+  #p5-canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+        pointer-events: none}
+
+/* I wanted visual consistency, so I created an inactive version of the previous toggle button template */
+  .deadbutton {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  color: #422800;
+  cursor: default;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  margin: 10px 10px 10px 10px;
+  font-family: "Jenson Font";
+  mix-blend-mode: overlay;
+}
+
+/* Hex size slider, styled to match the toggle buttons */
+  .slider-container {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 30px;
+  text-align: center;
+  margin: 10px 10px 10px 10px;
+  font-family: "Jenson Font";
+  mix-blend-mode: overlay;
+}
+
+/* Map title + image background, and controls to properly center the text in relation to the image */
+  #map-title {
+  font-size: 30px;
+  color: #422800;
+  font-family: "Jenson Font";
+  display: inline-block;
+  margin-left: 30px;
+  padding: 10px 100px 10px 100px;
+  background-image: url("https://cdn.pixabay.com/photo/2012/04/14/16/57/scroll-34606_960_720.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  text-align: center; 
+  background-position: center; 
+  mix-blend-mode: hard-light;
+}
+
+/* Attribute controlled by "Mirror Map" toggle button (I was unable to figure out a way to mirror the map without also mirroring its controls, unfortunately)*/
+#map.mirrored {
+  transform: scaleX(-1);
+}
+
+/* Attribute controlled by "Parchment On/Off" blend mode toggle button */
+.map-hard-light {
+mix-blend-mode: hard-light;
+}
+
+/* Attribute controlled by "Hex Grid On/Off" toggle button */
+.hidden {
+    display: none;}
+
+</style>
+</head>
+<body>
+
+<!-- Body elements -->
+  <div id="save-as-pdf" class="deadbutton">&#8595; Save as PDF</div>
+  <div class="slider-container">
+    <label for="hexagon-size-slider">Hex Size:</label>
+    <input type="range" min="20" max="150" value="50" class="slider" id="hexagon-size-slider">
+  </div>
+  <button id="toggle-hexagons" class="button-74">Hex Grid On/Off</button>
+  <button id="toggle-mirror" class="button-74">Mirror Map</button>
+  <button id="blend-mode-toggle" class="button-74">Parchment On/Off</button>
+  <button id="ruins-button" class="button-74">Add Ruins</button>
+  <div id="map-title">   Terra Incognita   </div>
+  <div id='map'></div>
+    
+<script>
+
+// Mapbox GL JS setup.
+// "attributionControl = false" so that I can enter custom attribution information
+// "minZoom: 3" because Mapbox doesn't render pattern layers below zoom level 3
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWR2ZXJzYXJpYWwtZ2VvZ3JhcGh5IiwiYSI6ImNsZjBvN3FqbjAwZDkzcmw0MGsxNDJ3MDIifQ.aVzxEUcFBUiojBtwfqYe6w';
+    var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/adversarial-geography/clfrqzhep000301mur6p5ps3l',
+            center: [-105, 65],
+            zoom: 3,
+            minZoom: 3,
+            attributionControl: false
+          });
+
+// Initial start state of "Add Ruins" toggle button        
+    var addRuins = false; 
+
+// Creating an array for the user-defined points
+    var ruinsLocation = [];
+
+// Event listener for clicks on the map when "Add Ruins" toggle button is on
+// If "addRuins = true", this function stores the lat/long coordinates of the pointer in the array "ruinsLocation"
+    map.on('click', function(e) {
+      if (addRuins) {
+          var coordinates = e.lngLat; 
+          ruinsLocation.push(coordinates);
+          map.getSource('symbols').setData({ 
+              type: 'FeatureCollection',
+              features: ruinsLocation.map(function(coords) {
+                  return {
+                      type: 'Feature',
+                      geometry: {
+                          type: 'Point',
+                          coordinates: [coords.lng, coords.lat]
+                      }
+                  };
+              })
+          });
+      }
+  });
+
+// Creating a layer for the ruin symbols
+    map.on('load', function() {
+        map.addLayer({
+            id: 'symbols',
+            type: 'symbol',
+            source: {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: []
+                }
+            },
+            layout: {
+                'icon-image': 'ruins', 
+                'icon-size': 0.5 
+            }
+        });
+      });
+
+// Assigning html element id of the toggle button 
+    var ruinsButton = document.getElementById('ruins-button');
+
+// Dual-purpose event listener for "Add Ruins" toggle button
+// First click activates "Add Ruins"
+// Second click clears data stored in the "ruinsLocation" array
+    ruinsButton.addEventListener('click', function() {
+        addRuins = !addRuins; 
+        if (addRuins) {
+            ruinsButton.innerHTML = 'Clear Ruins'; 
+        } else {
+            ruinsButton.innerHTML = 'Click to Add Ruins'; 
+            ruinsLocation = []; 
+            map.getSource('symbols').setData({ 
+                type: 'FeatureCollection',
+                features: [] 
+            });
+        }
+    });   
+
+// Customized attributions        
+    map.addControl(new mapboxgl.AttributionControl({
+      compact: true,
+      customAttribution: '<ul><li>© <a href="https://dylanmoriarty.github.io/blog/moriarty-hand.html">Dylan Moriarty ("Moriarty Hand" Global Polygons)</a></li><li>© <a href="http://www.imagico.de/map/jsdotpattern.php">Christoph Hormann ("Symbol Pattern Generator" and symbologies)</a></li><li>© <a href="https://ecoregions.appspot.com/">RESOLVE Ecoregions 2017 (Regions for patterns)</a></li><li>© <a href="https://www.gorillasun.de/blog/a-guide-to-hexagonal-grids-in-p5js/">Ahmad Moussa ("A Guide to Hex Grids in P5JS")</a></li><li>© <a href="https://github.com/mpetroff/print-maps">Matthew Petroff (Mapbox GL JS "Print Maps" extension)</a></li><li>Erwin Raisz: "General Cartography", 1948 (Mountain symbologies)</li></ul>'
+      }), 'bottom-right');
+
+// Added physical map controls
+    map.addControl(new mapboxgl.NavigationControl({
+      position: 'bottom-right'
+    }));
+
+// Event listener for "Mirror Map" toggle button      
+    var toggleMirrorButton = document.getElementById('toggle-mirror');
+    toggleMirrorButton.addEventListener('click', function() {
+    document.getElementById('map').classList.toggle('mirrored');
+    });
+
+// Event listener for "Parchment On/Off" toggle button
+    var blendModeToggle = document.getElementById("blend-mode-toggle");
+    var mapElement = document.getElementById("map");
+    blendModeToggle.addEventListener("click", function() {
+    mapElement.classList.toggle("map-hard-light");
+    });
+
+// Even listener for "Hex Grid On/Off" toggle button        
+    var p5canvas = document.getElementById('p5-canvas');
+    var toggleButton = document.getElementById('toggle-hexagons');
+    toggleButton.addEventListener('click', function() {
+    document.getElementById('p5-canvas').classList.toggle('hidden');
+    });       
+    
+// P5.js Hex Grid sketch adapted from (and attributed to) Ahmad Moussa @ https://www.gorillasun.de/blog/a-guide-to-hexagonal-grids-in-p5js/  
+    var sketch = function(p) {
+        var gridWidth, gridHeight, hexagonSize;
+
+        p.setup = function() {
+            var mapContainer = document.getElementById('map');
+            var rect = mapContainer.getBoundingClientRect();
+            var w = rect.width;
+            var h = rect.height;
+
+            p.createCanvas(w, h).id('p5-canvas');
+            gridWidth = w;
+            gridHeight = h;
+            hexagonSize = w/10;
+          };
+
+// Drawing an individual hexagon          
+        function drawHexagon(cX, cY, r) {
+            p.beginShape();
+            for(let a = 0; a < p.TAU; a += p.TAU/6) {
+              p.vertex(cX + r * p.cos(a), cY + r * p.sin(a));
+            }
+            p.endShape(p.CLOSE);
+          }
+
+// Double "for" loop to draw rows and columns      
+        function makeGrid() {
+            var count = 0;
+            for(var y = 0; y < gridHeight; y += hexagonSize/2.3) {
+                for(var x = 0; x < gridWidth; x += hexagonSize*1.5) {
+                    drawHexagon(x + hexagonSize*(count%2==0)*0.75, y, hexagonSize/2);
+                  }
+              count ++;
+            }
+          }
+
+        p.draw = function() {
+            p.background(0, 0, 0, 0);
+            p.stroke(80, 80, 80, 50);
+            p.noFill();
+            makeGrid();
+            p.noLoop();
+          };
+
+// Function using EventListener to clear and redraw the Hex Grid every time a value change is detected
+        document.getElementById('hexagon-size-slider').addEventListener('input', function() {
+            hexagonSize = this.value;
+            p.clear();
+            p.redraw();
+          });
+      
+// Added print-to-PDF control using Matthew Petroff's Mapbox GL JS extension from https://github.com/mpetroff/print-maps
+        map.addControl(new MapboxExportControl({
+            PageSize: Size.A3,
+            PageOrientation: PageOrientation.Portrait,
+            Format: Format.PNG,
+            DPI: DPI[96],
+            Crosshair: true,
+            PrintableArea: true,
+          }), 'top-left');
+};
+        
+// Assign P5.JS sketch to its html canvas id
+    var p5 = new p5(sketch, 'map').id('p5canvas');
+
+</script>
+</body>    
+</html>
