@@ -156,7 +156,7 @@ mix-blend-mode: hard-light;
 <body>
 
 <!-- Body elements -->
-  <div id="save-as-pdf" class="deadbutton">&#8595; Save as PDF</div>
+  <div id="save-as-pdf" class="button-74">&#8595; Save as PDF</div> I
   <div class="slider-container">
     <label for="hexagon-size-slider">Hex Size:</label>
     <input type="range" min="20" max="150" value="50" class="slider" id="hexagon-size-slider">
@@ -190,7 +190,7 @@ mix-blend-mode: hard-light;
     var ruinsLocation = [];
 
 // Event listener for clicks on the map when "Add Ruins" toggle button is on
-// If "addRuins = true", this function stores the lat/long coordinates of the pointer in the array "ruinsLocation"
+// If "addRuins = true", this function stores the lat/long coordinates of pointer clicks the array "ruinsLocation"
     map.on('click', function(e) {
       if (addRuins) {
           var coordinates = e.lngLat; 
@@ -210,7 +210,7 @@ mix-blend-mode: hard-light;
       }
   });
 
-// Creating a layer for the ruin symbols
+// Creating a layer for the user-defined ruin symbols
     map.on('load', function() {
         map.addLayer({
             id: 'symbols',
@@ -249,7 +249,7 @@ mix-blend-mode: hard-light;
         }
     });   
 
-// Customized attributions        
+// Added custom attributions        
     map.addControl(new mapboxgl.AttributionControl({
       compact: true,
       customAttribution: '<ul><li>© <a href="https://dylanmoriarty.github.io/blog/moriarty-hand.html">Dylan Moriarty ("Moriarty Hand" Global Polygons)</a></li><li>© <a href="http://www.imagico.de/map/jsdotpattern.php">Christoph Hormann ("Symbol Pattern Generator" and symbologies)</a></li><li>© <a href="https://ecoregions.appspot.com/">RESOLVE Ecoregions 2017 (Regions for patterns)</a></li><li>© <a href="https://www.gorillasun.de/blog/a-guide-to-hexagonal-grids-in-p5js/">Ahmad Moussa ("A Guide to Hex Grids in P5JS")</a></li><li>© <a href="https://github.com/mpetroff/print-maps">Matthew Petroff (Mapbox GL JS "Print Maps" extension)</a></li><li>Erwin Raisz: "General Cartography", 1948 (Mountain symbologies)</li></ul>'
@@ -259,6 +259,23 @@ mix-blend-mode: hard-light;
     map.addControl(new mapboxgl.NavigationControl({
       position: 'bottom-right'
     }));
+
+// Get a reference to the button and the map
+const saveAsPdfButton = document.getElementById('save-as-pdf');
+
+// Add a click event listener to the button
+saveAsPdfButton.addEventListener('click', () => {
+  // Create a new MapboxExportControl and add it to the map
+  const exportControl = new MapboxExportControl({
+    PageSize: Size.A3,
+    PageOrientation: PageOrientation.Portrait,
+    Format: Format.PNG,
+    DPI: DPI[96],
+    Crosshair: true,
+    PrintableArea: true,
+  });
+  map.addControl(exportControl, 'top-left');
+});
 
 // Event listener for "Mirror Map" toggle button      
     var toggleMirrorButton = document.getElementById('toggle-mirror');
@@ -273,7 +290,7 @@ mix-blend-mode: hard-light;
     mapElement.classList.toggle("map-hard-light");
     });
 
-// Even listener for "Hex Grid On/Off" toggle button        
+// Event listener for "Hex Grid On/Off" toggle button        
     var p5canvas = document.getElementById('p5-canvas');
     var toggleButton = document.getElementById('toggle-hexagons');
     toggleButton.addEventListener('click', function() {
@@ -316,6 +333,7 @@ mix-blend-mode: hard-light;
             }
           }
 
+// Draw function using the previously created makeGrid double 'for' loop        
         p.draw = function() {
             p.background(0, 0, 0, 0);
             p.stroke(80, 80, 80, 50);
@@ -324,22 +342,12 @@ mix-blend-mode: hard-light;
             p.noLoop();
           };
 
-// Function using EventListener to clear and redraw the Hex Grid every time a value change is detected
+// Function using Event Listener to clear and redraw the Hex Grid every time a value change is detected from the 'hexagon-size-slider' html element
         document.getElementById('hexagon-size-slider').addEventListener('input', function() {
             hexagonSize = this.value;
             p.clear();
             p.redraw();
-          });
-      
-// Added print-to-PDF control using Matthew Petroff's Mapbox GL JS extension from https://github.com/mpetroff/print-maps
-        map.addControl(new MapboxExportControl({
-            PageSize: Size.A3,
-            PageOrientation: PageOrientation.Portrait,
-            Format: Format.PNG,
-            DPI: DPI[96],
-            Crosshair: true,
-            PrintableArea: true,
-          }), 'top-left');
+          });     
 };
         
 // Assign P5.JS sketch to its html canvas id
