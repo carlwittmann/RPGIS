@@ -1,15 +1,17 @@
 # Terra Incognita
-Abstracting Cartography
 
-<p align="center"><img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg"  width="75%" height="75%"></p>
+*Abstracting Cartography, Childhood Novels, and Fantasy Maps*
 
-<p align="center"><img src="https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg"  width="75%" height="75%"></p>
+| <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/100acrewoods.jpg"> | <img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg"> | <img src="https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg"> |
+| ------ | ------ | ------ |
+| The 1000 Acre Woods | The Lake District and Wild Cat Island | Middle Earth |
 
-I used this project as an opportunity to explore the very first maps that captured my imagination as a child.
+When I think back to the maps that first captured my childhood imagination - Christopher Robin's 1000 Acre Woods; the Lake District as imagined by the Swallows & Amazons; Tolkein's Middle Earth - 
 
-https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg
 
-https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg
+
+
+
 
 
 
