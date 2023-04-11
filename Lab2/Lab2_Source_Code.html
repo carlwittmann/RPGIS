@@ -156,7 +156,7 @@ mix-blend-mode: hard-light;
 <body>
 
 <!-- Body elements -->
-  <div id="save-as-pdf" class="button-74">&#8595; Save as PDF</div> I
+  <div id="save-as-pdf" class="deadbutton">&#8595; Save as PDF</div> I
   <div class="slider-container">
     <label for="hexagon-size-slider">Hex Size:</label>
     <input type="range" min="20" max="150" value="50" class="slider" id="hexagon-size-slider">
@@ -260,22 +260,15 @@ mix-blend-mode: hard-light;
       position: 'bottom-right'
     }));
 
-// Get a reference to the button and the map
-const saveAsPdfButton = document.getElementById('save-as-pdf');
-
-// Add a click event listener to the button
-saveAsPdfButton.addEventListener('click', () => {
-  // Create a new MapboxExportControl and add it to the map
-  const exportControl = new MapboxExportControl({
-    PageSize: Size.A3,
-    PageOrientation: PageOrientation.Portrait,
-    Format: Format.PNG,
-    DPI: DPI[96],
-    Crosshair: true,
-    PrintableArea: true,
-  });
-  map.addControl(exportControl, 'top-left');
-});
+// Added print-to-PDF control using Matthew Petroff's Mapbox GL JS extension from https://github.com/mpetroff/print-maps
+map.addControl(new MapboxExportControl({
+            PageSize: Size.A3,
+            PageOrientation: PageOrientation.Portrait,
+            Format: Format.PNG,
+            DPI: DPI[96],
+            Crosshair: true,
+            PrintableArea: true,
+          }), 'top-left');
 
 // Event listener for "Mirror Map" toggle button      
     var toggleMirrorButton = document.getElementById('toggle-mirror');
