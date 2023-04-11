@@ -4,10 +4,12 @@
 
 | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/100acrewoods.jpg" height="300px"> | <img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg" height="300px"> | <img src="https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg" height="300px"> |
 | :------: | :------: | :------: |
-| **The 100 Acre Woods** | **The Lake District** | **Middle Earth** |
-| *"Winnie the Pooh", A.A. Milne* | *"Swallows & Amazons", Arthur Ransome* | *"The Fellowship of the Ring", J.R.R. Tolkien* |
+| *The 100 Acre Woods* | *The Lake District* | *Middle Earth* |
 
-I used this assignment as an opportunity to explore the early childhood influences that first sparked my interest in cartography. If I had to pinpoint where it all started, it would be here: Christopher Robin's 100 Acre Woods, the Lake District as imagined by the Swallows & Amazons, and Tolkein's Middle Earth. I spent a lot of time in libraries when I was younger - there was exactly one English bookstore in Riyadh throughout the '90s  
+
+If I had to pinpoint where it all started, it would be here: Christopher Robin's 100 Acre Woods, the Lake District as imagined by the Swallows & Amazons, and Tolkein's Middle Earth. I spent a lot of time in libraries as a child; throughout the '90s in Riyadh, there was exactly one store that sold English novels - Jarir Bookstore - and selection was limited. 
+
+Somewhat accidentally, this assignment turned into an exploration of the early childhood influences which first sparked my interest in cartography.
 
 
 
