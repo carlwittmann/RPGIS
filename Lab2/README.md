@@ -2,7 +2,7 @@
 
 *Abstracting Cartography, Childhood Novels, and Fantasy Maps*
 
-| <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/100acrewoods.jpg"> | <img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg"> | <img src="https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg"> |
+| <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/100acrewoods.jpg" width="200px"> | <img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg" width="200px"> | <img src="https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg" width="200px"> |
 | ------ | ------ | ------ |
 | The 1000 Acre Woods | The Lake District and Wild Cat Island | Middle Earth |
 
