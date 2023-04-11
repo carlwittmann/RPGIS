@@ -4,9 +4,9 @@
 
 | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/100acrewoods.jpg" height="300px"> | <img src="https://www.lancaster.ac.uk/dighum/files/2016/09/1936map-1024x765.jpg" height="300px"> | <img src="https://www.bl.uk/britishlibrary/~/media/bl/global/maps/collection%20items/6%20map%20of%20the%20middle%20earth.jpg" height="300px"> |
 | :------: | :------: | :------: |
-| ###### *The 1000 Acre Woods* | ###### *The Lake District and Wild Cat Island* | ###### *Middle Earth* |
+| *The 100 Acre Woods, "Winnie the Pooh", A.A. Milne* | *The Lake District, "Swallows & Amazons", Arthur Ransome* | *Middle Earth, "The Fellowship of the Ring", J.R.R. Tolkein* |
 
-When I think back to the maps that first captured my childhood imagination - Christopher Robin's 1000 Acre Woods; the Lake District as imagined by the Swallows & Amazons; Tolkein's Middle Earth - 
+When I think back to the maps that first captured my childhood imagination - Christopher Robin's 100 Acre Woods; the Lake District as imagined by the Swallows & Amazons; Tolkein's Middle Earth - 
 
 
 
