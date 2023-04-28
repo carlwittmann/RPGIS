@@ -32,10 +32,9 @@ I'm pretty happy with how it turned out! I actually plan on remaking this in the
 Tbe best part is that I had a lot of fun making this. It was rewarding and very, very nostalgic. Honestly, I think I'm going to continue making fantasy maps for fun. 
 
 
-| Normal View | Parchment "On" + Mirrored |
-| ------------- | ------------- |
 | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/normal.png" height="300px"> | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/mirror_parchment.png" height="300px"> |
-
+| :------: | :------: |
+| Normal View | Mirror + Parchment |
 
 | View Before Export | Exported PDF |
 | ------------- | ------------- |
