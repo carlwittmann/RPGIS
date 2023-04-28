@@ -7,10 +7,15 @@
 | *The 100 Acre Woods* | *The Lake District* | *Middle Earth* |
 
 
-If I had to pinpoint where it all started, it would be here: Christopher Robin's 100 Acre Woods, the Lake District as imagined by the Swallows & Amazons, and Tolkein's Middle Earth. I spent a lot of time in libraries as a child; throughout the '90s in Riyadh, there was exactly one store that sold English novels - Jarir Bookstore - and selection was limited. 
+If I had to pinpoint where it all started, it would be here: Christopher Robin's 100 Acre Woods, the Lake District as imagined by the Swallows & Amazons, and Tolkein's Middle Earth. I spent a lot of time in libraries as a child; throughout the '90s in Riyadh, there was exactly one store that sold English novels - Jarir Bookstore - and selection was limited. The libraries at the American International School, however, were *stacked to the roof* with books. It is difficult to understate just how important those libraries were to me - the novels I read sitting on that worn industrial carpet between shelves played a significant part in shaping who I am today. I can remember the sound of basketballs outside while other kids were at recess, the way the small dusty windows filtered the midday desert sun, the way the waterfountain tasted, the first time I skipped class (after pulling my first Discworld novel off the shelf)... and I remember looking for maps. I remember going book by book down the aisles, flipping through the first few pages, and collecting stacks of novels that began with a map.
 
-Somewhat accidentally, this assignment turned into an exploration of the early childhood influences which first sparked my interest in cartography.
+I was obsessed with those maps. I spent hours pouring over them, imagining what might be and what might have been. As I read through the novels, I constantly referenced the maps. I started drawing my own maps to extend the world beyond the borders of the printed page. I was absolutely captivated.
 
+Looking back, I can't help but ponder the dichotomy between the maps I was drawn to as a child and the maps I produce as an aspiring geospatial professional. I fell in love with maps not for the questions they answered, but for the questions they posed, yet when I personally approach a cartographic task I feel compelled to produce a nearly-infallible document - after all, shouldn't that be the goal of a cartographer? It certainly was drilled into me over the course of my degree, and I began to view everything I do through an empirical lens: If I want to be taken seriously, I should make serious maps. 
+
+Over this past semester, I've started to realize that I may have limited myself somewhat in that regard. I've forgotten that maps can be fun, or artistic, or playful. This lab was an opportunity for me to take a step back and reflect upon the maps which first sparked my interest in cartography, and which ultimately led to this essay.
+
+In the planning phase of this project, (and at your recommendation), I spent a significant amount of time browsing through Erwin Raisz's *General Cartography*
 
 
 
