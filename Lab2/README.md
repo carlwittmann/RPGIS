@@ -36,6 +36,7 @@ Tbe best part is that I had a lot of fun making this. It was rewarding and very,
 | :------: | :------: |
 | Normal View | Mirror + Parchment |
 
-| View Before Export | Exported PDF |
-| ------------- | ------------- |
-| <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/exportview_issues.png" height="300px"> | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/export.png" height="300px"> |
+
+| <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/exportview_issues.png" height="500px"> | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/export.png" height="500px"> |
+| :------: | :------: |
+| View Before Export | Exported Image |
