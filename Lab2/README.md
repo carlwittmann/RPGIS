@@ -29,7 +29,7 @@ In terms of UI, I went through several iterations of button layout and title bef
 
 I'm pretty happy with how it turned out! I actually plan on remaking this in the future, but instead of using tiled patterns I will multiple layers (for different zoom levels) of points randomized within their polygons. It should be easy to implement the parchment texture within Mapbox as a proper layer so that it renders to PDF, too. I'd also like to add more icons.
 
-Tbe best part is that I had a lot of fun making this. It was rewarding and very, very nostalgic. Honestly, I think I'm going to continue making fantasy maps for fun.
+The best part is that I had a lot of fun making this. It was rewarding and very, very nostalgic. Honestly, I think I'm going to continue making fantasy maps for fun.
 
 
 | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/normal.png" height="300px"> | <img src="https://github.com/carlwittmann/RPGIS/blob/main/pics/mirror_parchment.png" height="300px"> |
