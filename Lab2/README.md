@@ -6,6 +6,8 @@
 | :------: | :------: | :------: |
 | *The 100 Acre Woods* | *The Lake District* | *Middle Earth* |
 
+Link to map:
+https://carlwittmann.github.io/RPGIS/
 
 If I had to pinpoint where it all started, it would be here: Christopher Robin's 100 Acre Woods, the Lake District as imagined by the Swallows & Amazons, and Tolkein's Middle Earth. I spent a lot of time in libraries as a child; throughout the '90s in Riyadh, there was exactly one store that sold English novels - Jarir Bookstore - and selection was limited. The libraries at the American International School, however, were *stacked to the roof* with books. It is difficult to understate just how important those libraries were to me - the novels I read sitting on that worn industrial carpet between shelves played a significant part in shaping who I am today. I can remember the sound of basketballs outside while other kids were at recess, the way the small dusty windows filtered the midday desert sun, the way the waterfountain tasted, the first time I skipped class (after pulling my first Discworld novel off the shelf)... and I remember looking for maps. I remember going book by book down the aisles, flipping through the first few pages, and collecting stacks of novels that began with a map.
 
